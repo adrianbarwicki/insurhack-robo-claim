@@ -19,11 +19,12 @@
 </head>
 
 <body ng-app="app">
-    <div class="container-fluid">
+    <div style="height:100%" class="container-fluid">
       <div class="menu">
+            <img style="margin-left: 5px; margin-top:4px" height="40" src="/img/robo-icon.svg">
             <div class="name">ROBOCLAIM</div>
       </div>
-      <div class="col-xs-4 box" ng-controller="clientChatController as chat">
+      <div style="height:100%" class="col-xs-4 box" ng-controller="clientChatController as chat">
         <ol class="chat">
           <div>
               <div>{{chat.chatName}}</div>
@@ -36,20 +37,37 @@
             </div>
           </li>
         </ol>
-        <input class="textarea" type="text" placeholder="Type here!"/><div class="emojis"></div>
+        <form ng-submit="chat.submitMessage(chat.newMessage)">
+          <input ng-model="chat.newMessage" class="textarea" type="text" placeholder="Type here!" />
+          <div class="emojis"></div>
+        </form>
       </div>
 
-      <div class="col-xs-4 box" ng-controller="roboClaimControlller as roboclaim">
+      <div style="height:100%" class="col-xs-4 box" ng-controller="roboClaimControlller as roboclaim">
           <ol class="chat">
-              <div>
+              <div class="text-center">
                   <div>{{chat.chatName}}</div>
-                  I am the robotClaim Agent!
+                  <h2>I am the RoboClaim Agent!</h2>
+                  <p>I smooth the process of insurance claim submission!</p>
+                  <p>I make the life of insurance agents easier!</p>
+              </div>
+
+              <div class="text-center row">
+                <img style="margin: 0 auto; display:block" width="250" src="/img/robo-icon.svg">
+                <img style="margin: 0 auto; display:block" width="250" src="/img/zurich-logo.svg">
+              </div>
+
+              <div class="text-center" style="bottom: 0; position:absolute;">
+                  <p>
+                    Check my code here
+                    <br />
+                    <a href="https://github.com/adrianbarwicki/insurhack-robo-claim">https://github.com/adrianbarwicki/insurhack-robo-claim</a>
+                  </p>
               </div>
           </ol>
       </div>
 
-        <div class="col-xs-4 box" ng-controller="insurerChatController as chat">
-           
+      <div style="height:100%" class="col-xs-4 box" ng-controller="insurerChatController as chat">
             <ol class="chat">
               <div>
                 <div>Insurance agent</div>
@@ -62,7 +80,15 @@
                 </div>
               </li>
             </ol>
-            <input class="textarea" type="text" placeholder="Type here!"/><div class="emojis"></div>
+            <form ng-submit="chat.submitMessage(chat.newMessage)">
+            <input
+              ng-model="chat.newMessage"
+              class="textarea"
+              type="text"
+              placeholder="Type here!"/>
+              <div class="emojis">
+              </div>
+            </form>
           </div>
       </div>
   <script src="/node_modules/angular/angular.js"></script>

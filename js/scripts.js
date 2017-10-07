@@ -31,6 +31,20 @@ app.controller('clientChatController', function() {
         NewMessage('self', 'hey!'),
         NewMessage('other', 'hey! How can I help you?')
     ];
+
+    chat.submitMessage = function(message) {
+        if (!message) {
+            return;
+        }
+
+        const newMessage = NewMessage('self', message);
+
+        chat.messages.push(newMessage);
+
+        chat.newMessage = '';
+        
+        // here the api call happens, go fedor go!
+    };
 });
 
 app.controller('insurerChatController', function() {
@@ -51,6 +65,20 @@ app.controller('insurerChatController', function() {
         NewMessage('self', 'Hey, my name is Andrew! My policy nr is 1000.'),
         NewMessage('other', 'I found the insuree in our database... I could also find the policy insurance. More details here: <link>')
     ];
+
+    chat.submitMessage = function(message) {
+        if (!message) {
+            return;
+        }
+
+        const newMessage = NewMessage('self', message);
+
+        chat.messages.push(newMessage);
+
+        chat.newMessage = '';
+
+        // it does not matter what the insurance agent does here...
+    };
 });
 
 app.controller('roboClaimControlller', function() {
