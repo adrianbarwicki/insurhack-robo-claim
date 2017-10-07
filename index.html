@@ -20,13 +20,13 @@
 
 <body ng-app="app">
     <div class="container-fluid">
-      <div class="col-xs-4 box" ng-controller="clientChatController as clientChat">
+      <div class="col-xs-4 box" ng-controller="clientChatController as chat">
         <div class="menu">
-              <div class="name">{{clientChat.chatName}}</div>
+              <div class="name">{{chat.chatName}}</div>
         </div>
         <ol class="chat">
-          <li ng-repeat="message in clientChat.messages" class="{{ ::message.type }}">
-              <div class="avatar"><img ng-src="{{clientChat.participants[message.type].profileImgUrl}}" draggable="false"/></div>
+          <li ng-repeat="message in chat.messages" class="{{ ::message.type }}">
+              <div class="avatar"><img ng-src="{{chat.participants[message.type].profileImgUrl}}" draggable="false"/></div>
             <div class="msg">
               <p>{{message.text}}</p>
               <time>{{message.timestamp}}</time>
