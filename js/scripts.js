@@ -14,11 +14,11 @@ const NewMessage = function(type, text) {
 };
 
 app.controller('clientChatController', function() {
-    const clientChat = this;
+    const chat = this;
 
-    clientChat.chatName = 'Client';
+    chat.chatName = 'Client';
 
-    clientChat.participants = {
+    chat.participants = {
         self: {
             profileImgUrl: 'https://i.imgur.com/HYcn9xO.png'
         },
@@ -27,8 +27,33 @@ app.controller('clientChatController', function() {
         }
     };
 
-    clientChat.messages = [
+    chat.messages = [
         NewMessage('self', 'hey!'),
         NewMessage('other', 'hey! How can I help you?')
     ];
 });
+
+app.controller('insurerChatController', function() {
+    const chat = this;
+
+    chat.chatName = 'Insurance Agent';
+
+    chat.participants = {
+        self: {
+            profileImgUrl: 'https://i.imgur.com/HYcn9xO.png'
+        },
+        other: {
+            profileImgUrl: 'https://i.imgur.com/DY6gND0.png'
+        }
+    };
+
+    chat.messages = [
+        NewMessage('self', 'Hey, my name is Andrew! My policy nr is 1000.'),
+        NewMessage('other', 'I found the insuree in our database... I could also find the policy insurance. More details here: <link>')
+    ];
+});
+
+app.controller('roboClaimControlller', function() {
+    const roboClaim = this;
+});
+
