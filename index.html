@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>RoboClaim</title>
+  <title>RoboClaim - a project for insurHack 2017</title>
   <meta name="description" content="InsurhackRoboClaim is a tool developed at insurhack2017 that uses mining techniques to identify bottlenecks and improve efficiencies and conformance with standard claims processes.">
   <meta name="author" content="Adrian Barwicki, ... @add your names here">
 
@@ -16,8 +16,20 @@
 </head>
 
 <body>
-  <div>
-    Test app
+  <div ng-app="app" ng-controller="clientChatController as clientChat">
+  <div class="menu">
+        <div class="name">{{clientChat.chatName}}</div>
+  </div>
+  <ol class="chat">
+    <li ng-repeat="message in clientChat.messages" class="{{ ::message.type }}">
+        <div class="avatar"><img ng-src="{{clientChat.participants[message.type].profileImgUrl}}" draggable="false"/></div>
+      <div class="msg">
+        <p>{{message.text}}</p>
+        <time>{{message.timestamp}}</time>
+      </div>
+    </li>
+  </ol>
+  <input class="textarea" type="text" placeholder="Type here!"/><div class="emojis"></div>
   </div>
 
   <script src="/node_modules/angular/angular.js"></script>

@@ -34,4 +34,7 @@ NodeJS, AngularJS, IBM Watson
 ## TODO
 @todo
 
+## Contributors
+Adrian Barwicki, adrian@vq-labs.com
 
+... @todo - add your contact details here
