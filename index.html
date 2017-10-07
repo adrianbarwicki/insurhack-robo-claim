@@ -20,11 +20,14 @@
 
 <body ng-app="app">
     <div class="container-fluid">
+      <div class="menu">
+            <div class="name">ROBOCLAIM</div>
+      </div>
       <div class="col-xs-4 box" ng-controller="clientChatController as chat">
-        <div class="menu">
-              <div class="name">{{chat.chatName}}</div>
-        </div>
         <ol class="chat">
+          <div>
+              <div>{{chat.chatName}}</div>
+          </div>
           <li ng-repeat="message in chat.messages" class="{{ ::message.type }}">
               <div class="avatar"><img ng-src="{{chat.participants[message.type].profileImgUrl}}" draggable="false"/></div>
             <div class="msg">
@@ -37,20 +40,22 @@
       </div>
 
       <div class="col-xs-4 box" ng-controller="roboClaimControlller as roboclaim">
-          <div class="menu">
-                <div class="name">RoboClaim</div>
-          </div>
-          
-          This is the robotClaim Agent!
+          <ol class="chat">
+              <div>
+                  <div>{{chat.chatName}}</div>
+                  I am the robotClaim Agent!
+              </div>
+          </ol>
       </div>
 
         <div class="col-xs-4 box" ng-controller="insurerChatController as chat">
-            <div class="menu">
-                  <div class="name">{{chat.chatName}}</div>
-            </div>
+           
             <ol class="chat">
+              <div>
+                <div>Insurance agent</div>
+              </div>
               <li ng-repeat="message in chat.messages" class="{{ ::message.type }}">
-                  <div class="avatar"><img ng-src="{{chat.participants[message.type].profileImgUrl}}" draggable="false"/></div>
+                <div class="avatar"><img ng-src="{{chat.participants[message.type].profileImgUrl}}" draggable="false"/></div>
                 <div class="msg">
                   <p>{{message.text}}</p>
                   <time>{{message.timestamp}}</time>

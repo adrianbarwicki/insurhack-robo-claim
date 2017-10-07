@@ -305,7 +305,7 @@ emoji.funny{background-image: url(https://i.imgur.com/qKia58V.png);}
 /* T Y P E */
 
 input.textarea {
-    position: fixed;
+    position: absolute;
     bottom: 0px;
     left: 0px;
     right: 0px;
@@ -321,7 +321,7 @@ input.textarea {
     font-weight: 400;
 }
 .emojis {
-    position: fixed;
+    position: absolute;
     display: block;
     bottom: 8px;
     left: 7px;
