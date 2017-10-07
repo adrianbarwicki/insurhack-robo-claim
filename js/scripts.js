@@ -13,6 +13,27 @@ const NewMessage = function(type, text) {
     };
 };
 
+app.factory('messageExchangeService', function() {
+    var cb = null;
+
+    const registerListener = function(lCb) {
+        cb = lCb;
+    };
+
+    const messageSent = function(message) {
+        cb(message);
+    };
+
+    return {
+        registerListener,
+        messageSent
+    };
+});
+
+app.factory('apiService', function() {
+    return {};
+});
+
 app.controller('clientChatController', function() {
     const chat = this;
 
@@ -42,8 +63,15 @@ app.controller('clientChatController', function() {
         chat.messages.push(newMessage);
 
         chat.newMessage = '';
-        
+
         // here the api call happens, go fedor go!
+        // ...
+
+        // this will create a message on the insurer side
+        /**
+        messageExchangeService
+        .messageSent(newMessage);
+        */
     };
 });
 
@@ -79,9 +107,15 @@ app.controller('insurerChatController', function() {
 
         // it does not matter what the insurance agent does here...
     };
+
+    /**
+    messageExchangeService
+    .registerListener(function(message) {
+        chat.messages.push(newMessage);
+    });
+    */
 });
 
 app.controller('roboClaimControlller', function() {
     const roboClaim = this;
 });
-
