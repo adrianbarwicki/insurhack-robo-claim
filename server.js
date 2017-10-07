@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/policy/:policyId', (req, res) => {
-    res.send({ ok: 'ok' });
+    res.send(require('./test-data/policy.json'));
 });
 
 app.post('/api/message', (req, res) => {
