@@ -18,7 +18,20 @@ We propose a solution that automates the way of validating the email request, i.
 ## Solution
 We developed a tool scanning text, in particular e-mail messages containing a claim submission. The tool extracts entities like Names and Policy Numbers. If the extraction fails, an auto-reply message is generated with a hyperlink to chat where the customer is requested to enter specific informations at a time. 
 
+
+## Installation & Start
+```
+    npm install -g live-server
+
+    npm install
+
+    live-server ./app
+```
+
 ## Technology
-IBM Watson
+NodeJS, AngularJS, IBM Watson
+
+## TODO
+@todo
 
 

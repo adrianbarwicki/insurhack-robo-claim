@@ -1,0 +1,22 @@
+{
+  "name": "insurhack-robo-claim",
+  "version": "1.0.0",
+  "description": "RoboClaim is a tool developed at insurhack2017 that uses mining techniques to identify bottlenecks and improve efficiencies and conformance with standard claims processes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrianbarwicki/insurhack-robo-claim.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adrianbarwicki/insurhack-robo-claim/issues"
+  },
+  "homepage": "https://github.com/adrianbarwicki/insurhack-robo-claim#readme",
+  "dependencies": {
+    "angular": "^1.6.6"
+  }
+}
