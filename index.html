@@ -19,16 +19,17 @@
 </head>
 
 <body ng-app="app">
-    <div style="height:100%" class="container-fluid">
+    <div style="height:100%; padding-right: 0; padding-left: 0;" class="container-fluid">
       <div class="menu">
-            <img style="margin-left: 5px; margin-top:4px" height="40" src="/img/robo-icon.svg">
+            <img style="margin-left: 5px; margin-top:4px" height="40" src="./img/robo-icon.svg">
             <div class="name">ROBOCLAIM</div>
       </div>
-      <div style="height:100%" class="col-xs-4 box" ng-controller="clientChatController as chat">
+      <div style="height:100%" class="col-xs-4" ng-controller="clientChatController as chat">
         <ol class="chat">
           <div>
               <div>{{chat.chatName}}</div>
           </div>
+          <hr />
           <li ng-repeat="message in chat.messages" class="{{ ::message.type }}">
               <div class="avatar"><img ng-src="{{chat.participants[message.type].profileImgUrl}}" draggable="false"/></div>
             <div class="msg">
@@ -48,13 +49,13 @@
               <div class="text-center">
                   <div>{{chat.chatName}}</div>
                   <h2>I am the RoboClaim Agent!</h2>
-                  <p>I smooth the process of insurance claim submission!</p>
+                  <p>I make the process of insurance claim submission smooth!</p>
                   <p>I make the life of insurance agents easier!</p>
               </div>
 
               <div class="text-center row">
-                <img style="margin: 0 auto; display:block" width="250" src="/img/robo-icon.svg">
-                <img style="margin: 0 auto; display:block" width="250" src="/img/zurich-logo.svg">
+                <img style="margin: 0 auto; display:block" width="250" src="./img/robo-icon.svg">
+                <img style="margin: 0 auto; display:block" width="120" src="./img/zurich-logo.svg">
               </div>
 
               <div class="text-center" style="bottom: 0; position:absolute;">
@@ -67,11 +68,12 @@
           </ol>
       </div>
 
-      <div style="height:100%" class="col-xs-4 box" ng-controller="insurerChatController as chat">
+      <div style="height:100%; padding-right: 0;" class="col-xs-4" ng-controller="insurerChatController as chat">
             <ol class="chat">
               <div>
                 <div>Insurance agent</div>
               </div>
+              <hr />
               <li ng-repeat="message in chat.messages" class="{{ ::message.type }}">
                 <div class="avatar"><img ng-src="{{chat.participants[message.type].profileImgUrl}}" draggable="false"/></div>
                 <div class="msg">
@@ -91,7 +93,7 @@
             </form>
           </div>
       </div>
-  <script src="/node_modules/angular/angular.js"></script>
+  <script src="./node_modules/angular/angular.js"></script>
   <script src="js/scripts.js"></script>
 </body>
 </html>
