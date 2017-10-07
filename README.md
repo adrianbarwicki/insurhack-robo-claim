@@ -25,7 +25,7 @@ We developed a tool scanning text, in particular e-mail messages containing a cl
 
     npm install
 
-    live-server ./app
+    live-server ./
 ```
 
 ## Technology
