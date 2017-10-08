@@ -18,13 +18,17 @@ We propose a solution that automates the way of validating the email request, i.
 ## Solution
 We developed a tool scanning text, in particular e-mail messages containing a claim submission. The tool extracts entities like Names and Policy Numbers. If the extraction fails, an auto-reply message is generated with a hyperlink to chat where the customer is requested to enter specific informations at a time. 
 
-
 ## Installation & Start
 ```
     npm install -g live-server
 
     npm install
 
+    // starting the simple robo-claim server
+    // IBM_API_KEY and ZURICH_API_KEY are the env. variables.
+    IBM_API_KEY=xxxx ZURICH_API_KEY=xxxx node server.js
+
+    // starting the live-presentation
     live-server ./
 ```
 
