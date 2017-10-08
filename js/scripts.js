@@ -72,10 +72,7 @@ app.controller('clientChatController', function(messageExchangeService, apiServi
 
     chat.participants = Participants;
 
-    chat.messages = [
-        NewMessage('self', 'hey!'),
-        NewMessage('other', 'hey! How can I help you?')
-    ];
+    chat.messages = [];
 
     chat.submitMessage = function(message) {
         if (!message) {
@@ -93,11 +90,12 @@ app.controller('clientChatController', function(messageExchangeService, apiServi
         .sendMessage(newMessage)
         .then(function(response) {
             const policyId = response.data.args.policyId;
-            
+
             if (response.data.intend === 'policyProvided') {
                 return apiService
                 .checkPolicyNo(newMessage)
                 .then(function(policyResponse) {
+                    chat.messages.push(NewMessage('robot', 'Thank you. I have successfully transfered the message to your insurance agent.'));
 
                     messageExchangeService
                     .messageSent('client-messages', newMessage);
@@ -132,10 +130,7 @@ app.controller('insurerChatController', function(messageExchangeService) {
 
     chat.participants = Participants;
 
-    chat.messages = [
-        NewMessage('self', 'Hey, my name is Andrew! My policy nr is 1000.'),
-        NewMessage('other', 'I found the insuree in our database... I could also find the policy insurance. More details here: <link>')
-    ];
+    chat.messages = [];
 
     chat.submitMessage = function(message) {
         if (!message) {
@@ -160,6 +155,15 @@ app.controller('insurerChatController', function(messageExchangeService) {
     messageExchangeService
     .registerListener('client-messages', function(message) {
         chat.messages.push(message);
+    });
+
+    messageExchangeService
+    .registerListener('robot-to-insurer-messages', function(foundPolicy) {
+        var message = '';
+
+        const strifiedPolicy = JSON.stringify(foundPolicy);
+
+        chat.messages.push(NewMessage('robot', strifiedPolicy));
     });
 });
 
