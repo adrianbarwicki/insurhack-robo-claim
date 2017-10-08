@@ -13,15 +13,31 @@ const NewMessage = function(type, text) {
     };
 };
 
-app.factory('messageExchangeService', function() {
-    var cb = null;
+const Participants = {
+    robot: {
+        profileImgUrl: './img/robo-icon.svg'
+    },
+    self: {
+        profileImgUrl: 'https://i.imgur.com/HYcn9xO.png'
+    },
+    other: {
+        profileImgUrl: 'https://i.imgur.com/DY6gND0.png'
+    }
+};
 
-    const registerListener = function(lCb) {
-        cb = lCb;
+app.factory('messageExchangeService', function() {
+    var cbs = {
+        'client-messages': null
     };
 
-    const messageSent = function(message) {
-        cb(message);
+    const registerListener = function(eventCode, lCb) {
+        if (!cbs[eventCode])
+            cbs[eventCode] = lCb;
+    };
+
+    const messageSent = function(eventCode, message) {
+        if (cbs[eventCode])
+            cbs[eventCode](message);
     };
 
     return {
@@ -30,23 +46,31 @@ app.factory('messageExchangeService', function() {
     };
 });
 
-app.factory('apiService', function() {
-    return {};
+app.factory('apiService', function($http) {
+    const API_URL = 'http://localhost:3000';
+
+    const checkPolicyNo = function(policyId) {
+        return $http.get(API_URL + '/api/policy/' + policyId);
+    }
+
+    const sendMessage = function(message) {
+        return $http.post(API_URL + '/api/message', {
+            text: message.text
+        });
+    };
+
+    return {
+        checkPolicyNo,
+        sendMessage
+    };
 });
 
-app.controller('clientChatController', function() {
+app.controller('clientChatController', function(messageExchangeService, apiService) {
     const chat = this;
 
     chat.chatName = 'Client';
 
-    chat.participants = {
-        self: {
-            profileImgUrl: 'https://i.imgur.com/HYcn9xO.png'
-        },
-        other: {
-            profileImgUrl: 'https://i.imgur.com/DY6gND0.png'
-        }
-    };
+    chat.participants = Participants;
 
     chat.messages = [
         NewMessage('self', 'hey!'),
@@ -65,29 +89,48 @@ app.controller('clientChatController', function() {
         chat.newMessage = '';
 
         // here the api call happens, go fedor go!
-        // ...
+        apiService
+        .sendMessage(newMessage)
+        .then(function(response) {
+            const policyId = response.data.args.policyId;
+            
+            if (response.data.intend === 'policyProvided') {
+                return apiService
+                .checkPolicyNo(newMessage)
+                .then(function(policyResponse) {
 
-        // this will create a message on the insurer side
-        /**
-        messageExchangeService
-        .messageSent(newMessage);
-        */
+                    messageExchangeService
+                    .messageSent('client-messages', newMessage);
+
+                    messageExchangeService
+                    .messageSent('robot-to-insurer-messages', policyResponse.data);
+                });
+            } else {
+                chat.messages.push(
+                    NewMessage('robot', 'Unfortunately, we could not find the correct insurance policy. Is the policy number ' + policyId + ' correct?')
+                );
+            }
+        }, function(err) {
+            if (err.status === -1) {
+                return alert('Could not establish connection. Is the server working?')
+            }
+         
+            return alert(typeof err === 'object' ? JSON.stringify(err) : err);
+        });
     };
+
+    messageExchangeService
+    .registerListener('insurer-messages', function(message) {
+        chat.messages.push(message);
+    });
 });
 
-app.controller('insurerChatController', function() {
+app.controller('insurerChatController', function(messageExchangeService) {
     const chat = this;
 
     chat.chatName = 'Insurance Agent';
 
-    chat.participants = {
-        self: {
-            profileImgUrl: 'https://i.imgur.com/HYcn9xO.png'
-        },
-        other: {
-            profileImgUrl: 'https://i.imgur.com/DY6gND0.png'
-        }
-    };
+    chat.participants = Participants;
 
     chat.messages = [
         NewMessage('self', 'Hey, my name is Andrew! My policy nr is 1000.'),
@@ -105,15 +148,19 @@ app.controller('insurerChatController', function() {
 
         chat.newMessage = '';
 
+
+        // this will create a message on the insurer side
+        messageExchangeService
+        .messageSent('insurer-messages', newMessage);
+            
         // it does not matter what the insurance agent does here...
     };
 
-    /**
+
     messageExchangeService
-    .registerListener(function(message) {
-        chat.messages.push(newMessage);
+    .registerListener('client-messages', function(message) {
+        chat.messages.push(message);
     });
-    */
 });
 
 app.controller('roboClaimControlller', function() {
