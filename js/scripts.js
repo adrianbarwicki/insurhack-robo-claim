@@ -119,28 +119,6 @@ app.controller('clientChatController', function(messageExchangeService, apiServi
         });
     };
 
-    chat.lookupPolicy = function(policyNumber) {
-        if (!policyNumber)
-        {
-            // TODO react properly on missing policy number
-            return;
-        }
-        var url = "https://api.insurhack.com/gi/PolicyPeriod_Set('pc:" + policyNumber + "')?$expand=Submission,PolicyContactRoles,PriorLosses";
-        console.log(url);
-        $http({
-            method: 'GET',
-            url: url,
-            headers: {
-                'keyid': 'b4d1ee3b-3abf-41bb-97c7-80ba3a34fa87'
-            }
-        }).then(function successCallback(response) {
-            console.log("everything is fine!");
-        }, function errorCallback(response) {
-            debugger;
-            console.error("bad things happened: " + response);
-        });
-    };
-
     messageExchangeService
     .registerListener('insurer-messages', function(message) {
         chat.messages.push(message);
