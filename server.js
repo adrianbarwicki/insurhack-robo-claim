@@ -11,27 +11,31 @@ app.get('/', (req, res) => {
   res.send('Up and running');
 });
 
-app.get('/api/policy/:policyId', (req, res) => {
-    var policyNumber = req.params.policyId;
+app.get('/api/policy/:policyNumber', (req, res) => {
+    var policyNumber = req.params.policyNumber;
     if (!policyNumber) {
-        res.status(404).send("Policy id not provided");
+        res.status(404).send("Policy number not provided");
         return;
     }
-    var url = "https://api.insurhack.com/gi/PolicyPeriod_Set('pc:" + policyNumber + "')?$expand=Submission,PolicyContactRoles,PriorLosses";
+    var url = "https://api.insurhack.com/gideep/PolicyPeriod_Set?$expand=PolicyContactRoles&$filter=PolicyNumber eq '" + policyNumber + "'";
     var options = {
         url: url,
         headers: {
-            'keyid': 'b4d1ee3b-3abf-41bb-97c7-80ba3a34fa87'
+            // 'keyid': 'b4d1ee3b-3abf-41bb-97c7-80ba3a34fa87'
+            'keyid': 'bdaca0c0-4ed7-4600-86e4-e3bb45453fa7',
+            'content-type': 'application/json',
+            method: 'GET'
         }
     };
     console.log(url);
     function callback(error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log("everything is fine!");
+            console.log(body);
             res.send(body);
         } else {
             console.error("bad things happened: " + response);
-            res.status(404).send("Policy id not found");
+            res.status(404).send("Policy number not found");
         }
     }
     request(options, callback);
@@ -57,7 +61,7 @@ app.post('/api/message', (req, res) => {
     res.send({
         intend: 'policyProvided',
         args: {
-            policyId: 207
+            policyId: 900000002064
         },
         text: 'Thank you, your message has been submitted to the insurance agent.'
     });
