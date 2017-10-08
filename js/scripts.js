@@ -88,28 +88,34 @@ app.controller('clientChatController', function(messageExchangeService, apiServi
         apiService
         .sendMessage(newMessage)
         .then(function(response) {
-            const policyId = response.data.args.policyId;
+            const policyId = response.data.args ? response.data.args.policyId : null;
 
             if (response.data.intend === 'policyProvided') {
                 return apiService
                 .checkPolicyNo(policyId)
                 .then(function(policyResponse) {
                     chat.messages.push(NewMessage('robot', 'Thank you. I have successfully transfered the message to your insurance agent.'));
+                   
+                    const joinedMessage = chat.messages
+                    .filter(function(_) { return _.type === 'client'})
+                    .map(function(_) { return _.text}).join('. ')
 
                     messageExchangeService
-                    .messageSent('client-messages', newMessage);
+                    .messageSent('client-messages', NewMessage('client', joinedMessage));
 
                     messageExchangeService
-                    .messageSent('robot-to-insurer-messages', policyResponse.data);
+                    .messageSent('robot-to-insurer-messages', 'We could match the customer data with an entry in database: John Smith, Data of Birth: 1975-02-14');
                 }, function(errorResponse) {
                     chat.messages.push(
-                        NewMessage('robot', 'Unfortunately, we could not find the correct insurance policy. Is the policy number ' + policyId + ' correct?')
+                        NewMessage('robot', response.data.text)
                     );
                 });
             } else {
-                chat.messages.push(
-                    NewMessage('robot', 'Unfortunately, we could not identiy any insurance policy number in your message. Does your text ' + policyId + ' contain a policy number?')
-                );
+                if (response.data.text) {
+                    chat.messages.push(
+                        NewMessage('robot', response.data.text)
+                    );
+                }
             }
         }, function(err) {
             if (err.status === -1) {
