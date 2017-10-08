@@ -93,7 +93,7 @@ app.controller('clientChatController', function(messageExchangeService, apiServi
 
             if (response.data.intend === 'policyProvided') {
                 return apiService
-                .checkPolicyNo(newMessage)
+                .checkPolicyNo(policyId)
                 .then(function(policyResponse) {
                     chat.messages.push(NewMessage('robot', 'Thank you. I have successfully transfered the message to your insurance agent.'));
 
@@ -102,10 +102,14 @@ app.controller('clientChatController', function(messageExchangeService, apiServi
 
                     messageExchangeService
                     .messageSent('robot-to-insurer-messages', policyResponse.data);
+                }, function(errorResponse) {
+                    chat.messages.push(
+                        NewMessage('robot', 'Unfortunately, we could not find the correct insurance policy. Is the policy number ' + policyId + ' correct?')
+                    );
                 });
             } else {
                 chat.messages.push(
-                    NewMessage('robot', 'Unfortunately, we could not find the correct insurance policy. Is the policy number ' + policyId + ' correct?')
+                    NewMessage('robot', 'Unfortunately, we could not identiy any insurance policy number in your message. Does your text ' + policyId + ' contain a policy number?')
                 );
             }
         }, function(err) {
