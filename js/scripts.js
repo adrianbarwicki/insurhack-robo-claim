@@ -1,4 +1,3 @@
-
 const app = angular.module('app', [ ]);
 
 /**
@@ -17,7 +16,7 @@ const Participants = {
     robot: {
         profileImgUrl: './img/robo-icon.svg'
     },
-    self: {
+    client: {
         profileImgUrl: 'https://i.imgur.com/HYcn9xO.png'
     },
     other: {
@@ -79,7 +78,7 @@ app.controller('clientChatController', function(messageExchangeService, apiServi
             return;
         }
 
-        const newMessage = NewMessage('self', message);
+        const newMessage = NewMessage('client', message);
 
         chat.messages.push(newMessage);
 
