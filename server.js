@@ -166,11 +166,19 @@ app.post('/api/message', (req, res) => {
         });
     }
 
-    if (message.toLowerCase().indexOf("9000123") > -1) {
+    if (message.toLowerCase().indexOf("900012300123") === -1) {
         return res.send({
             intend: 'other',
             args: null,
             text: 'I could not find the policy number in our database. Please try again.'
+        });
+    } else {
+        return res.send({
+            intend: 'policyProvided',
+            args: {
+                policyId: 900000002064
+            },
+            text: 'Thank you, your message has been submitted to the insurance agent.'
         });
     }
 
