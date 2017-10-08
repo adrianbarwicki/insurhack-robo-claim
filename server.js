@@ -129,6 +129,7 @@ app.get('/api/policy/:policyNumber', (req, res) => {
         res.status(404).send("Policy number not provided");
         return;
     }
+
     var url = "https://api.insurhack.com/gideep/PolicyPeriod_Set?$expand=PolicyContactRoles&$filter=PolicyNumber eq '" + policyNumber + "'";
     var options = {
         url: url,
@@ -164,6 +165,16 @@ app.post('/api/message', (req, res) => {
             text: 'Hello! I am here to help you process your claim. Please provide your policy number.'
         });
     }
+
+    if (message.toLowerCase().indexOf("9000123") > -1) {
+        return res.send({
+            intend: 'other',
+            args: null,
+            text: 'I could not find the policy number in our database. Please try again.'
+        });
+    }
+
+    
 
     // here a watson call happens
 
